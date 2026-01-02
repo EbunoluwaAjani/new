@@ -64,7 +64,8 @@ The solution was developed using a structured analytics engineering workflow:
 
 The solution follows a layered dbt architecture designed for clarity, modularity, and scalability. Each layer has a distinct purpose, ensuring that raw data is incrementally refined into analytics‑ready models.
 
-Architecture Diagram
+### Architecture Diagram
+
 ┌──────────────────────────────┐
 │ DATA SOURCE │
 │ PostgreSQL public.* │
@@ -93,7 +94,7 @@ Architecture Diagram
 │ │ DIMENSIONS │ │ FACTS │ │ SESSIONS │
 │ │ dim_customer │ │ fct_orders │ │ int_session │
 │ │ dim_product │ │ fct_orderitem│ │ int_session_bounds│
-│ │ │ │ fct_events │ │ int_last_session_per_customer │
+│ │ │ │ fct_events │ │ int_last_session_per_customer│
 │ │ │ │ │ │ int_cart_value │
 │ │ │ │ │ │ int_check_order │
 │ └──────────────┘ └──────────────┘ └──────────────┘
@@ -122,6 +123,8 @@ Architecture Diagram
 │ │ (tests+contracts) │ (source configs) │ docs.md │
 │ └──────────────┘ └──────────────┘ └──────────────┘
 └──────────────────────────────┘
+
+
 ---
 
 ## Testing & Data Quality Strategy
