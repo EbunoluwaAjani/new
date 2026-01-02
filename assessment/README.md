@@ -3,51 +3,67 @@
 ```mermaid
 graph TD
 
-    %% 1. DATA SOURCE
-    subgraph A[DATA SOURCE]
-        A1["PostgreSQL DB\n(Raw Source Data)"]
+    %% ============================
+    %% 1. DATA SOURCES
+    %% ============================
+    subgraph A[DATA SOURCES]
+        A1["PostgreSQL / APIs / Files"]
     end
     A --> B
 
+    %% ============================
     %% 2. STAGING LAYER
-    subgraph B[STAGING LAYER]
+    %% ============================
+    subgraph B[STAGING LAYER (stg_*)]
         direction LR
-        B_D(Cleaning and Standardization)
-        B1[stg_customer] --- B2[stg_orders] --- B3[stg_orderitem]
-        B4[stg_events] --- B5[stg_product] --- B6[Other Sources]
+        B1[stg_customers]
+        B2[stg_orders]
+        B3[stg_order_items]
+        B4[stg_products]
+        B5[stg_events]
     end
     B --> C
 
+    %% ============================
     %% 3. INTERMEDIATE LAYER
-    subgraph C[INTERMEDIATE LAYER]
-        direction TD
-        C_D(Dimensional Models and Logic)
+    %% ============================
+    subgraph C[INTERMEDIATE LAYER (int_*)]
+        direction TB
 
-        subgraph C_MODELS[Models]
-            direction LR
-            C1[DIMENSIONS: dim_customer]
-            C2[FACTS: fct_orders]
-            C3[SESSIONS: int_session]
+        subgraph C_DIM[Dimensions]
+            C1[dim_customers]
+            C2[dim_products]
         end
 
-        subgraph C_FULFILLMENT[FULFILLMENT]
-            C4[int_order_fulfillment]
+        subgraph C_FACT[Facts]
+            C3[fct_orders]
+            C4[fct_sessions]
         end
 
-        C_MODELS --> C_FULFILLMENT
+        subgraph C_LOGIC[Business Logic]
+            C5[int_order_fulfillment]
+            C6[int_customer_lifecycle]
+        end
     end
     C --> D
 
+    %% ============================
     %% 4. MARTS LAYER
-    subgraph D[MARTS LAYER]
+    %% ============================
+    subgraph D[MARTS LAYER (mart_*)]
         direction LR
-        D1[mart_sales] --- D2[mart_cart_value] --- D3[order_fulfillment]
+        D1[mart_sales]
+        D2[mart_customer_value]
+        D3[mart_fulfillment]
     end
     D --> E
 
-    %% 5. PROJECT METADATA
+    %% ============================
+    %% 5. METADATA & DOCUMENTATION
+    %% ============================
     subgraph E[METADATA & DOCS]
         direction LR
-        E1[schema.yml] --- E2[sources.yml] --- E3[documentation]
+        E1[schema.yml]
+        E2[sources.yml]
+        E3[dbt docs]
     end
-    
