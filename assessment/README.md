@@ -232,6 +232,7 @@ graph TD
     end
 
     D --> E[PROJECT METADATA & DOCS];
+    
 ---
 
 ## Testing & Data Quality Strategy
