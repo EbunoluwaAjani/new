@@ -194,10 +194,15 @@ The solution follows a layered dbt architecture designed for clarity, modularity
 
 ---
 
-graph TD
-    A[PostgreSQL DB (raw source data)] --> B(STAGING LAYER);
+### Data Pipeline Architecture
 
-    subgraph STAGING LAYER
+```mermaid
+graph TD
+    %% 1. DATA SOURCE
+    A[PostgreSQL DB: raw source data] --> B(STAGING LAYER);
+
+    %% 2. STAGING LAYER
+    subgraph B [STAGING LAYER: Light cleaning, renaming]
         direction LR
         B1[stg_customer.sql]
         B2[stg_orders.sql]
@@ -208,7 +213,8 @@ graph TD
 
     B --> C(INTERMEDIATE LAYER);
 
-    subgraph INTERMEDIATE LAYER
+    %% 3. INTERMEDIATE LAYER
+    subgraph C [INTERMEDIATE LAYER: Business Logic, Dimensional Modeling]
         direction LR
         C1[DIMENSIONS]
         C2[FACTS]
@@ -217,13 +223,15 @@ graph TD
 
     C --> D(MARTS LAYER);
 
-    subgraph MARTS LAYER
+    %% 4. MARTS LAYER
+    subgraph D [MARTS LAYER: Business-ready, Analytics-focused]
         direction LR
         D1[mart_sales]
         D2[mart_cart_value]
         D3[order_fulfillment]
     end
 
+    D --> E[PROJECT METADATA & DOCS];
 ---
 
 ## Testing & Data Quality Strategy
