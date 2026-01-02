@@ -28,11 +28,11 @@ graph TD
             C2[FACTS: fct_orders]
             C3[SESSIONS: int_session]
         end
+        C_MODELS --> C_FULFILLMENT; %% Connection between nested subgraphs
 
         subgraph C_FULFILLMENT[FULFILLMENT]
             C4[int_order_fulfillment]
         end
-        C_MODELS --> C_FULFILLMENT;
     end
     C --> D;
 
@@ -48,3 +48,4 @@ graph TD
         direction LR
         E1[schema.yml] --- E2[sources.yml] --- E3[documentation]
     end
+    
