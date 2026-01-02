@@ -192,8 +192,6 @@ The solution follows a layered dbt architecture designed for clarity, modularity
 │   └────────────────────┘   └────────────────────┘   └────────────────────┘ │
 └─────────────────────────────────────────────────────────────────────────────┘
 
----
-
 ### Data Pipeline Architecture
 
 ```mermaid
@@ -232,8 +230,9 @@ graph TD
     end
 
     D --> E[PROJECT METADATA & DOCS];
+
+
     
----
 
 ## Testing & Data Quality Strategy
 
